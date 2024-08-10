@@ -1,28 +1,20 @@
-import { useEffect } from "react";
+import { getFlightsData } from "./http/http";
+import useFetchData from "./hooks/useFetchData";
+import Header from "./components/Header";
+import Icon from "./assets/icons/Icon";
 
 function App() {
-  useEffect(() => {
-    const getFlightsData = async () => {
-      const res = await fetch(
-        "https://api.schiphol.nl/public-flights/flights",
-        {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            ResourceVersion: "v4",
-            app_id: "9c3afd65",
-            app_key: "514a5bd8db9e756029e80b667ce63ad9",
-          },
-        }
-      );
+  const { data } = useFetchData({ requestFn: getFlightsData });
 
-      const resJson = await res.json();
-      console.log(resJson);
-    };
-    getFlightsData();
-  });
-
-  return <div>App</div>;
+  return (
+    <>
+      <Header />
+      <div className="flex flex-row items-center gap-2 font-bold">
+        <Icon className="" fill="black" type="plane" />
+        <h2>BOOK YOUR FLIGHT</h2>
+      </div>
+    </>
+  );
 }
 
 export default App;

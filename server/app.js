@@ -1,20 +1,28 @@
 const express = require("express");
 const axios = require("axios");
+const cors = require("cors");
+
 const app = express();
+app.use(cors());
+
 const port = 3000;
 
 // Define a route to fetch data from the Schiphol API
 app.get("/fetch-flights", async (req, res) => {
   try {
     // Make an API request using axios
-    const response = await axios.get("https://api.schiphol.nl/public-flights", {
-      headers: {
-        Accept: "application/json",
-        ResourceVersion: "v4",
-        app_id: "9c3afd65", // Replace with your actual app ID
-        app_key: "514a5bd8db9e756029e80b667ce63ad9", // Replace with your actual app key
-      },
-    });
+    const response = await axios.get(
+      "https://api.schiphol.nl/public-flights/flights",
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          ResourceVersion: "v4",
+          app_id: "9c3afd65", // Replace with your actual app ID
+          app_key: "514a5bd8db9e756029e80b667ce63ad9", // Replace with your actual app key
+        },
+      }
+    );
 
     // Send the API response back to the client
     res.json(response.data);
