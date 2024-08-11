@@ -25,15 +25,15 @@ const Header = () => {
       <div className="flex flex-row gap-10">
         <IconContainer>
           <Icon className="" fill="#4a0097" type="label" />
-          <button>Deals</button>
+          <button className="text-sm">Deals</button>
         </IconContainer>
         <IconContainer>
           <Icon className="" fill="#4a0097" type="earth" />
-          <button>Discover</button>
+          <button className="text-sm">Discover</button>
         </IconContainer>
         <IconContainer>
           <Icon className="size-8" fill="#4a0097" type="profile" />
-          <button>Tolga Sarıkaya</button>
+          <button className="text-sm">Tolga Sarıkaya</button>
         </IconContainer>
       </div>
     </header>
