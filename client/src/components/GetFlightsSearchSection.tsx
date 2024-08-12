@@ -69,67 +69,69 @@ const GetFlightsSearchSection: React.FC<GetFlightsSearchSectionProps> = ({
   };
 
   return (
-    <form onSubmit={getFlightsHandler} className="mx-5 rounded-xl bg-white p-5">
-      <div className="flex w-full flex-row justify-between">
-        <div className="flex flex-row items-center gap-2 font-bold">
-          <Icon className="" fill="black" type="plane" />
-          <h2>BOOK YOUR FLIGHT</h2>
+    <form onSubmit={getFlightsHandler} className="w-full py-5">
+      <div className="ml-5 rounded-xl bg-white p-5">
+        <div className="flex w-full flex-row justify-between">
+          <div className="flex flex-row items-center gap-2 font-bold">
+            <Icon className="" fill="black" type="plane" />
+            <h2>BOOK YOUR FLIGHT</h2>
+          </div>
+          <div className="flex flex-row">
+            <button
+              type="button"
+              className="rounded-l-3xl bg-[#4a0097] px-4 py-2 text-sm font-semibold text-[#f6f4f8]"
+            >
+              Round trip
+            </button>
+            <button
+              type="button"
+              className="rounded-r-3xl bg-[#f6f4f8] px-4 py-2 text-sm font-semibold text-[#4a0097]"
+            >
+              One way
+            </button>
+          </div>
         </div>
-        <div className="flex flex-row">
-          <button
-            type="button"
-            className="rounded-l-3xl bg-[#4a0097] px-4 py-2 text-sm font-semibold text-[#f6f4f8]"
-          >
-            Round trip
-          </button>
-          <button
-            type="button"
-            className="rounded-r-3xl bg-[#f6f4f8] px-4 py-2 text-sm font-semibold text-[#4a0097]"
-          >
-            One way
-          </button>
+        <div className="flex w-full flex-row gap-1 py-5">
+          <InputFields
+            ref={arrivingFlightRef}
+            type="flight-direction"
+            placeholder="Get Arriving Flights?"
+            iconType="plane-takeoff"
+            required={true}
+            className="rounded-l-3xl"
+          />
+          <InputFields
+            ref={departingFlightRef}
+            type="flight-direction"
+            placeholder="Get Departing Flights?"
+            iconType="plane-land"
+            required={true}
+            className="mr-4 rounded-r-3xl"
+          />
+          <InputFields
+            placeholder="Starting Date"
+            iconType="calender"
+            ref={startDateRef}
+            type="calender"
+            required={true}
+            className="mr-4 rounded-l-3xl"
+          />
+          <InputFields
+            placeholder="Ending Date"
+            iconType="calender"
+            ref={endDateRef}
+            type="calender"
+            required={true}
+            className="mr-4 rounded-r-3xl"
+          />
         </div>
+        <button
+          type="submit"
+          className="rounded-lg bg-[#4a0097] px-4 py-2 font-semibold text-[#f6f4f8]"
+        >
+          Show flights
+        </button>
       </div>
-      <div className="flex w-full flex-row gap-1 py-5">
-        <InputFields
-          ref={arrivingFlightRef}
-          type="flight-direction"
-          placeholder="Get Arriving Flights?"
-          iconType="plane-takeoff"
-          required={true}
-          className="rounded-l-3xl"
-        />
-        <InputFields
-          ref={departingFlightRef}
-          type="flight-direction"
-          placeholder="Get Departing Flights?"
-          iconType="plane-land"
-          required={true}
-          className="mr-4 rounded-r-3xl"
-        />
-        <InputFields
-          placeholder="Starting Date"
-          iconType="calender"
-          ref={startDateRef}
-          type="calender"
-          required={true}
-          className="mr-4 rounded-l-3xl"
-        />
-        <InputFields
-          placeholder="Ending Date"
-          iconType="calender"
-          ref={endDateRef}
-          type="calender"
-          required={true}
-          className="mr-4 rounded-r-3xl"
-        />
-      </div>
-      <button
-        type="submit"
-        className="rounded-lg bg-[#4a0097] px-4 py-2 font-semibold text-[#f6f4f8]"
-      >
-        Show flights
-      </button>
     </form>
   );
 };
