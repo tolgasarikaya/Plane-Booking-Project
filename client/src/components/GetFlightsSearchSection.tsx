@@ -1,4 +1,4 @@
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, useState } from "react";
 import Icon from "../assets/icons/Icon";
 import InputFields from "./InputFields";
 import { getFlightsData } from "../http/http";
@@ -18,6 +18,7 @@ const GetFlightsSearchSection: React.FC<GetFlightsSearchSectionProps> = ({
   const startDateRef = useRef<HTMLInputElement>(null);
   const endDateRef = useRef<HTMLInputElement>(null);
 
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const { refetch } = useFetchData({
     requestFn: getFlightsData,
     enabled: false,
@@ -31,8 +32,10 @@ const GetFlightsSearchSection: React.FC<GetFlightsSearchSectionProps> = ({
       !departingFlightRef.current?.value ||
       !startDateRef.current?.value ||
       !endDateRef.current?.value
-    )
+    ) {
+      setErrorMessage("All options has to be selected!");
       return;
+    }
 
     let flightDirection;
     if (arrivingFlightRef.current?.value === "Yes") {
@@ -64,7 +67,11 @@ const GetFlightsSearchSection: React.FC<GetFlightsSearchSectionProps> = ({
     }
 
     const result = await refetch(params);
-    console.log(result);
+    if (!result) {
+      setErrorMessage("Date difference should be at most 3 days!");
+      return;
+    }
+    setErrorMessage("");
     setSearchResultData(result.flights as FlightData[]); // Ensure the result is correctly typed
   };
 
@@ -125,12 +132,15 @@ const GetFlightsSearchSection: React.FC<GetFlightsSearchSectionProps> = ({
             className="mr-4 rounded-r-3xl"
           />
         </div>
-        <button
-          type="submit"
-          className="rounded-lg bg-[#4a0097] px-4 py-2 font-semibold text-[#f6f4f8]"
-        >
-          Show flights
-        </button>
+        <div className="flex flex-row items-center justify-between">
+          <button
+            type="submit"
+            className="rounded-lg bg-[#4a0097] px-4 py-2 font-semibold text-[#f6f4f8]"
+          >
+            Show flights
+          </button>
+          <p className="text-sm text-red-700">{errorMessage}</p>
+        </div>
       </div>
     </form>
   );
