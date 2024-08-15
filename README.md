@@ -1,6 +1,6 @@
 # Plane Booking Project
 ## Live Demo: 
-[Click To Open]([https://example.com](https://appfellas-9eafa7e39408.herokuapp.com/myflights))
+[Click to go to live demo](https://appfellas-9eafa7e39408.herokuapp.com/myflights)
 
 ## Project Screens
 ### Main Page:
