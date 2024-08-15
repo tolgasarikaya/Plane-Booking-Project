@@ -1,13 +1,16 @@
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useRef } from "react";
 import Icon from "../assets/icons/Icon";
 import InputFields from "./InputFields";
 import { getFlightsData } from "../http/http";
 import useFetchData from "../hooks/useFetchData";
 import dateConverter from "../utils/dateConverter";
 import { FlightQueryParams, FlightData } from "../interfaces/interfaces";
+import { toast, Bounce, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { createPortal } from "react-dom";
 
 interface GetFlightsSearchSectionProps {
-  setSearchResultData: (data: FlightData[]) => void; // Corrected the type here
+  setSearchResultData: (data: FlightData[]) => void;
 }
 
 const GetFlightsSearchSection: React.FC<GetFlightsSearchSectionProps> = ({
@@ -18,7 +21,6 @@ const GetFlightsSearchSection: React.FC<GetFlightsSearchSectionProps> = ({
   const startDateRef = useRef<HTMLInputElement>(null);
   const endDateRef = useRef<HTMLInputElement>(null);
 
-  const [errorMessage, setErrorMessage] = useState<string>("");
   const { refetch } = useFetchData({
     requestFn: getFlightsData,
     enabled: false,
@@ -33,7 +35,16 @@ const GetFlightsSearchSection: React.FC<GetFlightsSearchSectionProps> = ({
       !startDateRef.current?.value ||
       !endDateRef.current?.value
     ) {
-      setErrorMessage("All options has to be selected!");
+      toast.warning("All input field must be filled!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "light",
+        transition: Bounce,
+      });
       return;
     }
 
@@ -68,11 +79,19 @@ const GetFlightsSearchSection: React.FC<GetFlightsSearchSectionProps> = ({
 
     const result = await refetch(params);
     if (!result) {
-      setErrorMessage("Date difference should be at most 3 days!");
+      toast.warning("Date difference should be at most 3 days!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "light",
+        transition: Bounce,
+      });
       return;
     }
-    setErrorMessage("");
-    setSearchResultData(result.flights as FlightData[]); // Ensure the result is correctly typed
+    setSearchResultData(result.flights.flights as FlightData[]);
   };
 
   return (
@@ -139,9 +158,9 @@ const GetFlightsSearchSection: React.FC<GetFlightsSearchSectionProps> = ({
           >
             Show flights
           </button>
-          <p className="text-sm text-red-700">{errorMessage}</p>
         </div>
       </div>
+      {createPortal(<ToastContainer />, document.body)}
     </form>
   );
 };

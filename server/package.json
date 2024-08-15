@@ -2,8 +2,9 @@
   "name": "appfellas",
   "version": "1.0.0",
   "description": "AppFellas Case Project",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Tolga SARIKAYA",
@@ -11,6 +12,14 @@
   "dependencies": {
     "axios": "^1.7.3",
     "cors": "^2.8.5",
-    "express": "^4.19.2"
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.3"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }

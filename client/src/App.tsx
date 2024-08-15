@@ -1,17 +1,27 @@
-import Header from "./components/Header";
-import GetFlightsSection from "./components/GetFlightsSection";
-import OtherTopics from "./components/OtherTopics";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import MainPage from "./pages/MainPage";
+import MyFlights from "./pages/MyFlights";
+import Layout from "./pages/Layout";
 
-function App() {
-  return (
-    <>
-      <Header />
-      <div className="flex flex-row">
-        <GetFlightsSection />
-        <OtherTopics />
-      </div>
-    </>
-  );
-}
+const App = () => {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          index: true,
+          element: <MainPage />,
+        },
+        {
+          path: "/myflights",
+          element: <MyFlights />,
+        },
+      ],
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
+};
 
 export default App;

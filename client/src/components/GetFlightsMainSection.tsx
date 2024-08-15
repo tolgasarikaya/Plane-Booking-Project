@@ -5,19 +5,38 @@ import { FlightData } from "../interfaces/interfaces";
 import { useState } from "react";
 import BookFlightModal from "./Modals/BookFlightModal";
 
-const GetFlightsMainSection = ({ data }: { data: FlightData[] }) => {
+const GetFlightsMainSection = ({
+  data,
+  type,
+}: {
+  data: FlightData[];
+  type: string;
+}) => {
   const [isBookFlightModalOpen, setIsBookFlightModalOpen] =
     useState<boolean>(false);
-  const [selectedFlight, setSelectedFlight] = useState<FlightData | null>(null);
+  const [selectedFlight, setSelectedFlight] = useState<FlightData>(
+    {} as FlightData,
+  );
 
   const bookFlightModalHandler = (flightData: FlightData) => {
-    setSelectedFlight(flightData);
+    const newFlightData = {
+      flightDirection: flightData.flightDirection,
+      route: {
+        destinations: flightData.route.destinations,
+        eu: flightData.route.eu,
+        visa: flightData.route.visa,
+      },
+      scheduleDateTime: flightData.scheduleDateTime,
+    };
+    setSelectedFlight(newFlightData);
     setIsBookFlightModalOpen(true);
   };
 
   const setDisplayBookFlightModal = () => {
     setIsBookFlightModalOpen(false);
   };
+
+  console.log(data);
   return (
     <>
       <div className="mt-5 w-[70%] min-w-[70%]">
@@ -88,7 +107,7 @@ const GetFlightsMainSection = ({ data }: { data: FlightData[] }) => {
               </div>
               <button
                 onClick={() => bookFlightModalHandler(fligth)}
-                className="absolute bottom-0 right-0 w-1/5 rounded-br-xl rounded-tl-xl bg-[#4a0097] py-6 font-semibold text-[#f6f4f8]"
+                className={`${type === "myflights" ? "invisible" : ""} absolute bottom-0 right-0 w-1/5 rounded-br-xl rounded-tl-xl bg-[#4a0097] py-6 font-semibold text-[#f6f4f8]`}
               >
                 Book Flight
               </button>

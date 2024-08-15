@@ -1,3 +1,5 @@
+import { FlightData } from "../interfaces/interfaces";
+
 const apiUrl = "http://localhost:3000";
 
 interface FlightQueryParams {
@@ -8,7 +10,6 @@ interface FlightQueryParams {
 }
 
 export const getFlightsData = async (params: FlightQueryParams) => {
-  // Convert all params to strings
   const stringParams: Record<string, string> = Object.fromEntries(
     Object.entries(params).map(([key, value]) => [key, String(value)]),
   );
@@ -24,4 +25,29 @@ export const getFlightsData = async (params: FlightQueryParams) => {
 
   const data = await res.json();
   return data;
+};
+
+export const postMyFlightsData = async (data: FlightData) => {
+  const res = await fetch(`${apiUrl}/flights/myflights`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  const response = await res.json();
+  return response;
+};
+
+export const getMyFlightsData = async () => {
+  const res = await fetch(`${apiUrl}/flights/myflights`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const response = await res.json();
+  return response;
 };

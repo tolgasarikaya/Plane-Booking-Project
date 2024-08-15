@@ -16,7 +16,7 @@ const GetFlightsSection = () => {
     <div className="w-3/4">
       <GetFlightsSearchSection setSearchResultData={setSearchResultData} />
       <div className="flex w-full min-w-full flex-row">
-        <GetFlightsMainSection data={data} />
+        <GetFlightsMainSection data={data} type="mainPage" />
         <GetFlightsFilterSection />
       </div>
     </div>
